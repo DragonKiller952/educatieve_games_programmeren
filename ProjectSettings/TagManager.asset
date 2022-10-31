@@ -16,8 +16,12 @@ TagManager:
   - Wood (Static)
   - Dirt (Static)
   - Wood
-  - Red
-  - Blue
+  - Red_Gun
+  - Blue_Gun
+  - Red_Enemy
+  - Blue_Enemy
+  - Red_Ammo
+  - Blue_Ammo
   layers:
   - Default
   - TransparentFX

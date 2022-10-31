@@ -186,7 +186,10 @@ namespace InfimaGames.LowPolyShooterPack
 
 			//Refresh!
 			RefreshWeaponSetup();
-		}
+
+            //StartCoroutine(nameof(Equip), 0);
+            //StartCoroutine(nameof(Equip), 1);
+        }
 		protected override void Start()
 		{
 			//Cache a reference to the holster layer's index.
@@ -195,9 +198,40 @@ namespace InfimaGames.LowPolyShooterPack
 			layerActions = characterAnimator.GetLayerIndex("Layer Actions");
 			//Cache a reference to the overlay layer's index.
 			layerOverlay = characterAnimator.GetLayerIndex("Layer Overlay");
-		}
 
-		protected override void Update()
+            StartCoroutine(nameof(Equip), 0);
+            StartCoroutine(nameof(Equip), 1);
+        }
+
+		private void OnTriggerEnter(Collider collision)
+		{
+			if(collision.gameObject.transform.CompareTag("Red_Ammo"))
+            {
+				foreach (WeaponBehaviour gun in inventory.GetWeapons())
+                {
+					if (gun.CompareTag("Red_Gun"))
+                    {
+						gun.AddAmmunition(10);
+                    }
+                }
+                Destroy(collision.gameObject);
+            }
+			else if (collision.gameObject.transform.CompareTag("Blue_Ammo"))
+            {
+                foreach (WeaponBehaviour gun in inventory.GetWeapons())
+                {
+                    if (gun.CompareTag("Blue_Gun"))
+                    {
+                        gun.AddAmmunition(10);
+                    }
+                }
+                Destroy(collision.gameObject);
+            }
+
+        }
+
+
+        protected override void Update()
 		{
 			//Match Aim.
 			aiming = holdingButtonAim && CanAim();
@@ -749,7 +783,7 @@ namespace InfimaGames.LowPolyShooterPack
 					int indexNext = scrollValue > 0 ? inventory.GetNextIndex() : inventory.GetLastIndex();
 					//Get the current weapon's index.
 					int indexCurrent = inventory.GetEquippedIndex();
-					
+
 					//Make sure we're allowed to change, and also that we're not using the same index, otherwise weird things happen!
 					if (CanChangeWeapon() && (indexCurrent != indexNext))
 						StartCoroutine(nameof(Equip), indexNext);

@@ -131,6 +131,11 @@ namespace InfimaGames.LowPolyShooterPack
         public abstract void FillAmmunition();
 
         /// <summary>
+        /// Adds ammunition to the weapons total ammunition.
+        /// </summary>
+        public abstract void AddAmmunition(int ammo);
+
+        /// <summary>
         /// Ejects a casing from the weapon. This is commonly called from animation events, but can be called from anywhere.
         /// </summary>
         public abstract void EjectCasing();

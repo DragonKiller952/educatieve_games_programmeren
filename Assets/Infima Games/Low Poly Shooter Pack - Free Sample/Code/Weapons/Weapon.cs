@@ -278,6 +278,19 @@ namespace InfimaGames.LowPolyShooterPack
             }
         }
 
+        public override void AddAmmunition(int ammo = 0)
+        {
+            if (ammo == 0)
+            {
+                ammunitionTotal = 50;
+            }
+            else
+            {
+                ammunitionTotal += ammo;
+            }
+        }
+
+
         public override void EjectCasing()
         {
             //Spawn casing prefab at spawn point.
