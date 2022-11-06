@@ -92,11 +92,20 @@ namespace InfimaGames.LowPolyShooterPack
 		/// The equipped weapon's attachment manager.
 		/// </summary>
 		private WeaponAttachmentManagerBehaviour weaponAttachmentManager;
-		
-		/// <summary>
-		/// The scope equipped on the character's weapon.
-		/// </summary>
-		private ScopeBehaviour equippedWeaponScope;
+
+        /// <summary>
+        /// Amount of health left.
+        /// </summary>
+        private int healthCurrent = 100;
+        /// <summary>
+        /// Total amount of health available.
+        /// </summary>
+        private int healthTotal = 100;
+
+        /// <summary>
+        /// The scope equipped on the character's weapon.
+        /// </summary>
+        private ScopeBehaviour equippedWeaponScope;
 		/// <summary>
 		/// The magazine equipped on the character's weapon.
 		/// </summary>
@@ -279,8 +288,12 @@ namespace InfimaGames.LowPolyShooterPack
 		public override Camera GetCameraWorld() => cameraWorld;
 
 		public override InventoryBehaviour GetInventory() => inventory;
-		
-		public override bool IsCrosshairVisible() => !aiming && !holstered;
+
+
+        public override int GetHealthCurrent() => healthCurrent;
+        public override int GetHealthTotal() => healthTotal;
+
+        public override bool IsCrosshairVisible() => !aiming && !holstered;
 		public override bool IsRunning() => running;
 		
 		public override bool IsAiming() => aiming;
@@ -798,18 +811,40 @@ namespace InfimaGames.LowPolyShooterPack
 			{
 				//Performed.
 				case {phase: InputActionPhase.Performed}:
-					//Toggle the cursor locked value.
-					cursorLocked = !cursorLocked;
-					//Update the cursor's state.
-					UpdateCursorState();
-					break;
+                    //Toggle the cursor locked value.
+
+					ToPause();
+
+                    break;
 			}
 		}
-		
-		/// <summary>
-		/// Movement.
-		/// </summary>
-		public void OnMove(InputAction.CallbackContext context)
+
+		public void ToPause()
+        {
+            Debug.Log("to_pause");
+            cursorLocked = false;
+            //Update the cursor's state.
+            UpdateCursorState();
+            Time.timeScale = 0;
+            transform.GetChild(1).gameObject.SetActive(false);
+            transform.GetChild(2).gameObject.SetActive(true);
+        }
+
+        public void FromPause()
+        {
+			Debug.Log("from_pause");
+            cursorLocked = true;
+            //Update the cursor's state.
+            UpdateCursorState();
+            Time.timeScale = 1;
+            transform.GetChild(1).gameObject.SetActive(true);
+            transform.GetChild(2).gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// Movement.
+        /// </summary>
+        public void OnMove(InputAction.CallbackContext context)
 		{
 			//Read.
 			axisMovement = cursorLocked ? context.ReadValue<Vector2>() : default;
@@ -823,23 +858,7 @@ namespace InfimaGames.LowPolyShooterPack
 			axisLook = cursorLocked ? context.ReadValue<Vector2>() : default;
 		}
 
-		/// <summary>
-		/// Called in order to update the tutorial text value.
-		/// </summary>
-		public void OnUpdateTutorial(InputAction.CallbackContext context)
-		{
-			//Switch.
-			tutorialTextVisible = context switch
-			{
-				//Started. Show the tutorial.
-				{phase: InputActionPhase.Started} => true,
-				//Canceled. Hide the tutorial.
-				{phase: InputActionPhase.Canceled} => false,
-				//Default.
-				_ => tutorialTextVisible
-			};
-		}
-
+		
 		#endregion
 
 		#region ANIMATION EVENTS

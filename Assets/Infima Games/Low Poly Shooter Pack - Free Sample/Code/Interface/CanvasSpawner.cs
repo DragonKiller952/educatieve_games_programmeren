@@ -16,6 +16,8 @@ namespace InfimaGames.LowPolyShooterPack.Interface
         [Tooltip("Canvas prefab spawned at start. Displays the player's user interface.")]
         [SerializeField]
         private GameObject canvasPrefab;
+        [SerializeField]
+        private GameObject pausePrefab;
 
         #endregion
 
@@ -27,7 +29,12 @@ namespace InfimaGames.LowPolyShooterPack.Interface
         private void Awake()
         {
             //Spawn Interface.
-            Instantiate(canvasPrefab);
+            GameObject canvas = Instantiate(canvasPrefab);
+            canvas.transform.SetParent(transform);
+
+            GameObject pause = Instantiate(pausePrefab);
+            pause.transform.SetParent(transform);
+            pause.SetActive(false);
         }
 
         #endregion

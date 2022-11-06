@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
             Vector3 spawnPosition = transform.position;
             spawnPosition += new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * distance;
 
-            var lookPos = Player.transform.position - transform.position;
+            var lookPos = Player.transform.position - spawnPosition;
             lookPos.y = 0;
             var rotation = Quaternion.LookRotation(lookPos);
 

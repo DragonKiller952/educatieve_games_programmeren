@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Infima Games/Low Poly Shooter Pack - Free Sample/Scenes/S_Content_Overview.unity
-    guid: 63fdc04a097eb0b4ba4af78a98dac40d
+    path: Assets/Main_menu.unity
+    guid: 1cb3f035a57ed4bd19c69d6861bc2ee7
+  - enabled: 1
+    path: Assets/Main_scene.unity
+    guid: 981fd16cf0abb4e87a0f0f192e80ac57
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9eb07e2d669e9c94e9d7d3c782a916f7,
       type: 2}

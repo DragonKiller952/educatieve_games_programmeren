@@ -46,6 +46,15 @@ namespace InfimaGames.LowPolyShooterPack
         public abstract InventoryBehaviour GetInventory();
 
         /// <summary>
+        /// Returns Current Health.
+        /// </summary>
+        public abstract int GetHealthCurrent();
+        /// <summary>
+        /// Returns Total Health.
+        /// </summary>
+        public abstract int GetHealthTotal();
+
+        /// <summary>
         /// Returns true if the Crosshair should be visible.
         /// </summary>
         public abstract bool IsCrosshairVisible();

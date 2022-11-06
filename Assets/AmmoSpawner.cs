@@ -17,7 +17,7 @@ public class AmmoSpawner : MonoBehaviour
 
         for (int i = 0; i < amount; i++)
         {
-            float angle = Random.Range(-Mathf.PI, Mathf.PI);
+            //float angle = Random.Range(-Mathf.PI, Mathf.PI);
             Vector3 spawnPosition = new Vector3(Random.Range(-spawnArea.x, spawnArea.x), spawnArea.y, Random.Range(-spawnArea.z, spawnArea.z));
 
             while (Vector3.Distance(spawnPosition, transform.position) > distance)
