@@ -55,6 +55,11 @@ namespace InfimaGames.LowPolyShooterPack
         public abstract int GetHealthTotal();
 
         /// <summary>
+        /// Returns Total Health.
+        /// </summary>
+        public abstract int GetScoreCurrent();
+
+        /// <summary>
         /// Returns true if the Crosshair should be visible.
         /// </summary>
         public abstract bool IsCrosshairVisible();

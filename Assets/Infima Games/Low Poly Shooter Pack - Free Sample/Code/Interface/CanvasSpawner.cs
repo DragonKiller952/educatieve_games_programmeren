@@ -18,6 +18,8 @@ namespace InfimaGames.LowPolyShooterPack.Interface
         private GameObject canvasPrefab;
         [SerializeField]
         private GameObject pausePrefab;
+        [SerializeField]
+        private GameObject gameOverPrefab;
 
         #endregion
 
@@ -35,6 +37,10 @@ namespace InfimaGames.LowPolyShooterPack.Interface
             GameObject pause = Instantiate(pausePrefab);
             pause.transform.SetParent(transform);
             pause.SetActive(false);
+
+            GameObject gameOver = Instantiate(gameOverPrefab);
+            gameOver.transform.SetParent(transform);
+            gameOver.SetActive(false);
         }
 
         #endregion

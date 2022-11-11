@@ -9,9 +9,13 @@ public class EnemySpawner : MonoBehaviour
     public GameObject RedEnemy;
     public GameObject BlueEnemy;
     public GameObject Player;
+    public GameObject WaveScreen;
     private int wave = 1;
-    public int amount = 10;
+    public int amount = 5;
     public int distance = 10;
+    private int killed = 0;
+    private int killValue = 100;
+    private bool coroutine_running;
 
 
     private string[] positive = new string[] { "Na", "K", "NH4", "Mg", "Al", "Fe", "Zn", "Cu", "Ca", "Ba", "Hg", "Pb", "Ag"};
@@ -20,18 +24,20 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        SpawnWave(amount);
+        coroutine_running = true;
+        StartCoroutine(StartWave());
     }
 
      //Update is called once per frame
     void Update()
     {
-        if(transform.childCount == 0)
+        if (transform.childCount == 0 && !coroutine_running)
         {
             wave++;
-            amount += 5;
+            amount += 2;
 
-            SpawnWave(amount);
+            coroutine_running = true;
+            StartCoroutine(StartWave());
         }
     }
 
@@ -72,4 +78,22 @@ public class EnemySpawner : MonoBehaviour
             }
         }
     }
+
+    IEnumerator StartWave()
+    {
+        GameObject waveScreen = Instantiate(WaveScreen);
+        waveScreen.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "Wave " + wave;
+        waveScreen.transform.SetParent(Player.transform);
+        yield return new WaitForSeconds(5);
+        Destroy(waveScreen);
+        SpawnWave(amount);
+        coroutine_running = false;
+    }
+
+    public void AddKill()
+    {
+        killed++;
+    }
+
+    public int GetKillScore() => (killed * killValue);
 }

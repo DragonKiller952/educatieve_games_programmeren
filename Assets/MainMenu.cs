@@ -7,13 +7,14 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     public GameObject Tutorial;
+    public GameObject Intro;
     public GameObject Loading;
     public Slider loadingBar;
     // Start is called before the first frame update
+
     public void StartGame()
     {
         StartCoroutine(StartGameAsynchronously("Main_scene"));
-        //SceneManager.LoadScene("Main_scene");
     }
     public void OpenTutorial()
     {
@@ -23,6 +24,11 @@ public class MainMenu : MonoBehaviour
     public void CloseTutorial()
     {
         Tutorial.SetActive(false);
+    }
+
+    public void ShowIntro()
+    {
+        Intro.SetActive(true);
     }
 
     public void ExitGame()

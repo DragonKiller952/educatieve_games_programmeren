@@ -22,7 +22,17 @@ namespace InfimaGames.LowPolyShooterPack
 		[SerializeField]
 		private InventoryBehaviour inventory;
 
-		[Header("Cameras")]
+        [Header("Spawners")]
+
+        [Tooltip("Enemy.")]
+        [SerializeField]
+        private GameObject enemySpawner;
+
+        [Tooltip("Ammo.")]
+        [SerializeField]
+        private GameObject ammoSpawner;
+
+        [Header("Cameras")]
 
 		[Tooltip("Normal Camera.")]
 		[SerializeField]
@@ -242,6 +252,17 @@ namespace InfimaGames.LowPolyShooterPack
 
         protected override void Update()
 		{
+			if (healthCurrent <= 0)
+            {
+                Debug.Log("GameOver");
+                cursorLocked = false;
+                //Update the cursor's state.
+                UpdateCursorState();
+                Time.timeScale = 0;
+                transform.GetChild(1).gameObject.SetActive(false);
+                transform.GetChild(3).gameObject.SetActive(true);
+            }
+
 			//Match Aim.
 			aiming = holdingButtonAim && CanAim();
 			//Match Run.
@@ -292,6 +313,9 @@ namespace InfimaGames.LowPolyShooterPack
 
         public override int GetHealthCurrent() => healthCurrent;
         public override int GetHealthTotal() => healthTotal;
+
+        public override int GetScoreCurrent() => (ammoSpawner.GetComponent<AmmoSpawner>().GetPickUpScore() +
+													enemySpawner.GetComponent<EnemySpawner>().GetKillScore());
 
         public override bool IsCrosshairVisible() => !aiming && !holstered;
 		public override bool IsRunning() => running;
@@ -456,13 +480,40 @@ namespace InfimaGames.LowPolyShooterPack
 			const string boolName = "Holstered";
 			characterAnimator.SetBool(boolName, holstered);	
 		}
-		
-		#region ACTION CHECKS
 
-		/// <summary>
-		/// Can Fire.
-		/// </summary>
-		private bool CanPlayAnimationFire()
+        public void ToPause()
+        {
+            Debug.Log("to_pause");
+            cursorLocked = false;
+            //Update the cursor's state.
+            UpdateCursorState();
+            Time.timeScale = 0;
+            transform.GetChild(1).gameObject.SetActive(false);
+            transform.GetChild(2).gameObject.SetActive(true);
+        }
+
+        public void FromPause()
+        {
+            Debug.Log("from_pause");
+            cursorLocked = true;
+            //Update the cursor's state.
+            UpdateCursorState();
+            Time.timeScale = 1;
+            transform.GetChild(1).gameObject.SetActive(true);
+            transform.GetChild(2).gameObject.SetActive(false);
+        }
+
+		public void TakeDamage(int amount)
+        {
+			healthCurrent -= amount;
+        }
+
+        #region ACTION CHECKS
+
+        /// <summary>
+        /// Can Fire.
+        /// </summary>
+        private bool CanPlayAnimationFire()
 		{
 			//Block.
 			if (holstered || holstering)
@@ -818,28 +869,6 @@ namespace InfimaGames.LowPolyShooterPack
                     break;
 			}
 		}
-
-		public void ToPause()
-        {
-            Debug.Log("to_pause");
-            cursorLocked = false;
-            //Update the cursor's state.
-            UpdateCursorState();
-            Time.timeScale = 0;
-            transform.GetChild(1).gameObject.SetActive(false);
-            transform.GetChild(2).gameObject.SetActive(true);
-        }
-
-        public void FromPause()
-        {
-			Debug.Log("from_pause");
-            cursorLocked = true;
-            //Update the cursor's state.
-            UpdateCursorState();
-            Time.timeScale = 1;
-            transform.GetChild(1).gameObject.SetActive(true);
-            transform.GetChild(2).gameObject.SetActive(false);
-        }
 
         /// <summary>
         /// Movement.
