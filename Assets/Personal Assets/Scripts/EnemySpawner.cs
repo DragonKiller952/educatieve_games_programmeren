@@ -24,6 +24,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        //Start a new wave
         coroutine_running = true;
         StartCoroutine(StartWave());
     }
@@ -31,6 +32,7 @@ public class EnemySpawner : MonoBehaviour
      //Update is called once per frame
     void Update()
     {
+        //If all enemies are dead and is not already spawning
         if (transform.childCount == 0 && !coroutine_running)
         {
             wave++;
@@ -40,7 +42,9 @@ public class EnemySpawner : MonoBehaviour
             StartCoroutine(StartWave());
         }
     }
-
+    /// <summary>
+    /// Spawns a wave of random enemies given the amount
+    /// </summary>
     void SpawnWave(int enemyAmount)
     {
         for (int i = 0; i < enemyAmount; i++)
@@ -54,6 +58,7 @@ public class EnemySpawner : MonoBehaviour
             var rotation = Quaternion.LookRotation(lookPos);
 
             int enemyKind = Random.Range(0, 2);
+            //If enemy is red
             if (enemyKind == 0)
             {
                 string element = negative[Random.Range(0, negative.Length)];
@@ -65,6 +70,7 @@ public class EnemySpawner : MonoBehaviour
 
                 newenemy.transform.parent = transform;
             }
+            //If enemy is blue
             else if (enemyKind == 1)
             {
                 string element = positive[Random.Range(0, positive.Length)];
@@ -95,5 +101,8 @@ public class EnemySpawner : MonoBehaviour
         killed++;
     }
 
+    /// <summary>
+    /// Score based on kills and value of kills
+    /// </summary>
     public int GetKillScore() => (killed * killValue);
 }

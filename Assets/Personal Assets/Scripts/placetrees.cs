@@ -20,11 +20,8 @@ public class placetrees : MonoBehaviour
         {
             int treekind = Random.Range(0, prefabs.Length);
             Vector3 spawnPosition = new Vector3(Random.Range(-spawnArea.x, spawnArea.x), spawnArea.y, Random.Range(-spawnArea.z, spawnArea.z));
-            //while (Vector3.Distance(spawnPosition, transform.position) < distance || Physics.CheckSphere(spawnPosition, 2f))
-            //{
-            //    spawnPosition = new Vector3(Random.Range(-spawnArea.x, spawnArea.x), spawnArea.y, Random.Range(-spawnArea.z, spawnArea.z));
-            //}
-            //Instantiate(prefabs[treekind], spawnPosition, Random.rotation);
+
+            //If new tree is far enough away from the center and other trees
             if (Vector3.Distance(spawnPosition, transform.position) > distance && Physics.OverlapSphere(spawnPosition, 0.8f).Length == 1)
             {
                 Quaternion rotation = Quaternion.identity;
@@ -36,10 +33,4 @@ public class placetrees : MonoBehaviour
         }
         Debug.Log(trees + " trees planted");
     }
-
-    // Update is called once per frame
-    //void Update()
-    //{
-        
-    //}
 }

@@ -14,19 +14,24 @@ public class game_over_menu : MonoBehaviour
 
     public void Update()
     {
+        //Keep updating the score on the screen while it is not shown
         Score.text = "Score: " + transform.parent.GetComponent<Character>().GetScoreCurrent();
     }
 
+    /// <summary>
+    /// Opens the scene containing the main menu
+    /// </summary>
     public void MainMenu()
     {
         SceneManager.LoadScene("Main_menu");
     }
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Restarts the game by opening the game scene with a loading bar
+    /// </summary>
     public void RestartGame()
     {
         StartCoroutine(StartGameAsynchronously("Main_scene"));
-        //SceneManager.LoadScene("Main_scene");
     }
 
     IEnumerator StartGameAsynchronously(string scene)

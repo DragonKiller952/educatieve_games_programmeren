@@ -34,10 +34,12 @@ namespace InfimaGames.LowPolyShooterPack.Interface
             GameObject canvas = Instantiate(canvasPrefab);
             canvas.transform.SetParent(transform);
 
+            //Spawn Pause Menu
             GameObject pause = Instantiate(pausePrefab);
             pause.transform.SetParent(transform);
             pause.SetActive(false);
 
+            //Spawn Game Over Interface
             GameObject gameOver = Instantiate(gameOverPrefab);
             gameOver.transform.SetParent(transform);
             gameOver.SetActive(false);

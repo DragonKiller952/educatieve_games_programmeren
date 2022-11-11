@@ -55,7 +55,7 @@ namespace InfimaGames.LowPolyShooterPack
         public abstract int GetHealthTotal();
 
         /// <summary>
-        /// Returns Total Health.
+        /// Returns current Score.
         /// </summary>
         public abstract int GetScoreCurrent();
 

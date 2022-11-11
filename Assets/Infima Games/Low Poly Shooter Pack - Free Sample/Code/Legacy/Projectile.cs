@@ -68,6 +68,7 @@ public class Projectile : MonoBehaviour {
 			Destroy (gameObject);
 		}
 
+		//If bullet collides with given creature tag
         if (collision.transform.tag == creature)
         {
             //Toggle "isHit" on target object

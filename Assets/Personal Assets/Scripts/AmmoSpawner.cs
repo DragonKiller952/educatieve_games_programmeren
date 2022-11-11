@@ -26,11 +26,13 @@ public class AmmoSpawner : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
+        //If ammo was picked up
         if (transform.childCount < spawned)
         {
             pickedUp += (spawned - transform.childCount);
         }
 
+        //If new ammo can spawn
         if (spawnTime <= Time.time)
         {
             spawnTime = Time.time + spawnDelay;
@@ -40,6 +42,9 @@ public class AmmoSpawner : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Spawns one red and blue ammo in the vicinity of the spawner
+    /// </summary>
     void SpawnAmmo()
     {
         Vector3 spawnArea = new Vector3(distance, 0, distance);
@@ -57,12 +62,13 @@ public class AmmoSpawner : MonoBehaviour
             Quaternion spawnRotation = Quaternion.identity;
             var rotation = Quaternion.identity;
 
-
+            //If red
             if (i % 2 == 0)
             {
                 GameObject red = Instantiate(RedAmmo, spawnPosition, rotation);
                 red.transform.parent = transform;
             }
+            //If blue
             else
             {
                 GameObject blue = Instantiate(BlueAmmo, spawnPosition, rotation);
@@ -71,5 +77,8 @@ public class AmmoSpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Score based on ammo picked up an value of ammo picked up
+    /// </summary>
     public int GetPickUpScore() => (pickedUp * pickedUpValue);
 }

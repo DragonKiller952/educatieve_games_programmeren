@@ -252,21 +252,25 @@ namespace InfimaGames.LowPolyShooterPack
             //Update the value by a certain amount.
             int ammoRemains = 0;
 
+            //If gun still has bullets
             if (HasAmmunition())
             {
                 ammoRemains = GetAmmunitionCurrent();
             }
 
+            //If gun has enough bullets to fully reload fully
             if (ammunitionTotal >= GetClipTotal())
             {
                 ammunitionCurrent = GetClipTotal();
                 ammunitionTotal -= (GetClipTotal() - ammoRemains);
             }
+            //If gun doesn't have enough bullets to reload fully
             else
             {
                 ammunitionCurrent = Mathf.Clamp(ammunitionCurrent + ammunitionTotal,
                 0, GetClipTotal());
 
+                //If the gun has in total more bullets than it can currently carry
                 if ((ammoRemains + ammunitionTotal) > GetClipTotal())
                 {
                     ammunitionTotal = (ammoRemains + ammunitionTotal) - GetClipTotal();

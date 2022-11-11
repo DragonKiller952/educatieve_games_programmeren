@@ -205,9 +205,6 @@ namespace InfimaGames.LowPolyShooterPack
 
 			//Refresh!
 			RefreshWeaponSetup();
-
-            //StartCoroutine(nameof(Equip), 0);
-            //StartCoroutine(nameof(Equip), 1);
         }
 		protected override void Start()
 		{
@@ -218,12 +215,14 @@ namespace InfimaGames.LowPolyShooterPack
 			//Cache a reference to the overlay layer's index.
 			layerOverlay = characterAnimator.GetLayerIndex("Layer Overlay");
 
+			//Initialize the weapons
             StartCoroutine(nameof(Equip), 0);
             StartCoroutine(nameof(Equip), 1);
         }
 
 		private void OnTriggerEnter(Collider collision)
 		{
+			//Add red ammo if it the player touches it
 			if(collision.gameObject.transform.CompareTag("Red_Ammo"))
             {
 				foreach (WeaponBehaviour gun in inventory.GetWeapons())
@@ -235,6 +234,7 @@ namespace InfimaGames.LowPolyShooterPack
                 }
                 Destroy(collision.gameObject);
             }
+			//Add blue ammo if the player touches it
 			else if (collision.gameObject.transform.CompareTag("Blue_Ammo"))
             {
                 foreach (WeaponBehaviour gun in inventory.GetWeapons())
@@ -252,9 +252,9 @@ namespace InfimaGames.LowPolyShooterPack
 
         protected override void Update()
 		{
+			//The player is dead
 			if (healthCurrent <= 0)
             {
-                Debug.Log("GameOver");
                 cursorLocked = false;
                 //Update the cursor's state.
                 UpdateCursorState();
@@ -380,6 +380,7 @@ namespace InfimaGames.LowPolyShooterPack
 
 		private void PlayReloadAnimation()
 		{
+			//The player still has ammo to reload with
 			if (equippedWeapon.GetAmmunitionTotal() > 0)
 			{
 				#region Animation
@@ -481,6 +482,9 @@ namespace InfimaGames.LowPolyShooterPack
 			characterAnimator.SetBool(boolName, holstered);	
 		}
 
+        /// <summary>
+        /// Pauses the game
+        /// </summary>
         public void ToPause()
         {
             Debug.Log("to_pause");
@@ -492,6 +496,9 @@ namespace InfimaGames.LowPolyShooterPack
             transform.GetChild(2).gameObject.SetActive(true);
         }
 
+        /// <summary>
+        /// Resumes the game from pause.
+        /// </summary>
         public void FromPause()
         {
             Debug.Log("from_pause");
@@ -503,7 +510,10 @@ namespace InfimaGames.LowPolyShooterPack
             transform.GetChild(2).gameObject.SetActive(false);
         }
 
-		public void TakeDamage(int amount)
+        /// <summary>
+        /// Updates the health variable by removing the given amount.
+        /// </summary>
+        public void TakeDamage(int amount)
         {
 			healthCurrent -= amount;
         }

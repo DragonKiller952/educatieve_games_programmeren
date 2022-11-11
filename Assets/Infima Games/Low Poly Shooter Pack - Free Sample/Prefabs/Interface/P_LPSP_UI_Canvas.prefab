@@ -152,7 +152,7 @@ MonoBehaviour:
   updateColor: 1
   emptySpeed: 1.5
   emptyColor: {r: 1, g: 0, b: 0, a: 1}
-  loadingBar: {fileID: 5507189275008025501}
+  healthBar: {fileID: 5507189275008025501}
 --- !u!1 &377193689281912669
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,7 +31,7 @@ namespace InfimaGames.LowPolyShooterPack.Interface
 
         [Tooltip("Determines if the color of the text should changes as ammunition is fired.")]
         [SerializeField]
-        private Slider loadingBar;
+        private Slider healthBar;
 
         #endregion
 
@@ -42,14 +42,14 @@ namespace InfimaGames.LowPolyShooterPack.Interface
         /// </summary>
         protected override void Tick()
         {
-            //Current Ammunition.
+            //Current Health.
             float current = playerCharacter.GetHealthCurrent();
-            //Total Ammunition.
+            //Total Health.
             float total = playerCharacter.GetHealthTotal();
             
-            //Update Text.
+            //Update Text and Health bar 
             textMesh.text = current.ToString(CultureInfo.InvariantCulture);
-            loadingBar.value = current;
+            healthBar.value = current;
 
             //Determine if we should update the text's color.
             if (updateColor)
